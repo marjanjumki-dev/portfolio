@@ -344,27 +344,11 @@
   <div class="wrap" style="text-align:center;">
     <div class="section-tag" style="text-align:center;">[CONTACT]</div>
     <h2>Have a tracking problem?</h2>
-    <p class="subtitle" style="margin:12px auto 32px;">If your GA4 numbers don't match Meta, or your CAPI events aren't deduplicating — that's exactly what I fix. Tell me what's going on.</p>
-    <form class="contact-form" id="contactForm">
-      <div class="form-row">
-        <label for="cf-name">Name</label>
-        <input id="cf-name" type="text" placeholder="Your name" required>
-      </div>
-      <div class="form-row">
-        <label for="cf-email">Email</label>
-        <input id="cf-email" type="email" placeholder="you@company.com" required>
-      </div>
-      <div class="form-row">
-        <label for="cf-website">Website</label>
-        <input id="cf-website" type="text" placeholder="yourstore.com (optional)">
-      </div>
-      <div class="form-row">
-        <label for="cf-problem">Problem</label>
-        <textarea id="cf-problem" placeholder="What's not tracking correctly?" required></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary form-submit">Submit →</button>
-      <p class="form-note">This opens your email app with the details filled in — I reply within a day.</p>
-    </form>
+    <p class="subtitle" style="margin:12px auto 32px;">If your GA4 numbers don't match Meta, or your CAPI events aren't deduplicating — that's exactly what I fix. Reach out through whichever platform works for you.</p>
+    <div class="hero-ctas" style="justify-content:center;">
+      <a href="#" class="btn btn-primary">Message me on Fiverr →</a>
+      <a href="#" class="btn btn-ghost">Message me on Upwork →</a>
+    </div>
   </div>
 </section>
 
@@ -374,7 +358,7 @@
       <a href="#">Fiverr</a>
       <a href="#">Upwork</a>
       <a href="#">LinkedIn</a>
-      <a href="mailto:you@example.com">Email</a>
+      <a href="mailto:marjanjumki@gmail.com">Email</a>
     </div>
     <div class="foot-note">Built &amp; instrumented by Marjan — every event on this page is, unfortunately, not actually tracked yet.</div>
   </div>
@@ -497,20 +481,6 @@ faqs.forEach(f=>{
     <div class="faq-a">${f.a}</div>
   `;
   faqList.appendChild(el);
-});
-
-// Contact form -> opens mail client with prefilled details
-document.getElementById('contactForm').addEventListener('submit', function(e){
-  e.preventDefault();
-  const name = document.getElementById('cf-name').value;
-  const email = document.getElementById('cf-email').value;
-  const website = document.getElementById('cf-website').value;
-  const problem = document.getElementById('cf-problem').value;
-  const subject = encodeURIComponent('Tracking help — ' + name);
-  const body = encodeURIComponent(
-    `Name: ${name}\nEmail: ${email}\nWebsite: ${website || 'N/A'}\n\nProblem:\n${problem}`
-  );
-  window.location.href = `mailto:you@example.com?subject=${subject}&body=${body}`;
 });
 </script>
 
