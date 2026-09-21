@@ -41,7 +41,8 @@
     border-bottom:1px solid var(--line);
   }
   nav .wrap{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;}
-  .brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;}
+  .brand{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;white-space:nowrap;}
+  @media(max-width:420px){.brand{font-size:13px;}}
   .brand .dot{color:var(--amber);}
   .navlinks{display:flex;gap:28px;font-size:13px;color:var(--muted);}
   .navlinks a:hover{color:var(--text);}
@@ -235,7 +236,7 @@
 
 <nav>
   <div class="wrap">
-    <div class="brand">marjan<span class="dot">.</span>track</div>
+    <div class="brand">marjana<span class="dot">.</span>trackingexpert</div>
     <div class="navlinks">
       <a href="#about">About</a>
       <a href="#stack">Stack</a>
