@@ -389,48 +389,70 @@ events.forEach((e,i)=>{
 // Case studies data
 const cases = [
   {
-    tag:'[GA4] · WOOCOMMERCE',
-    title:'Full-funnel GA4 ecommerce tracking via GTM',
-    desc:'Built the complete five-event purchase funnel on a WooCommerce Blocks store, fixing a view_item double-fire caused by post-add-to-cart page reloads.',
-    flow:['PageView','ViewContent','AddToCart','InitiateCheckout','Purchase'],
+    tag:'[GA4] · DYNAMIC TAG',
+    title:'Scalable GA4 E-commerce Tracking via GTM',
+    desc:'One dynamic, regex-driven GA4 tag handling the entire e-commerce funnel — view_item through purchase — instead of building a separate tag for every event.',
+    flow:['view_item','add_to_cart','begin_checkout','add_payment_info','purchase'],
     proofL:'Problem',
-    proofLtext:'view_item fired twice per product page due to WooCommerce Blocks reloading the DOM after add-to-cart.',
-    proofR:'Fix',
-    proofRtext:'Added a sessionStorage flag + custom trigger condition in GTM so the event only fires on genuine first load.',
-    pdf:'#', loom:'#'
+    proofLtext:'A typical setup needs 10+ separate tags and triggers — repetitive and hard to maintain as events grow.',
+    proofR:'Solution',
+    proofRtext:'One GA4 tag with a dynamic {{Event}} variable, matched by a single regex trigger — verified live in GA4 DebugView.',
+    pdf:'ga4-dynamic-tracking.pdf', loom:'#'
   },
   {
     tag:'[META] · CAPI',
-    title:'Meta Pixel + Conversions API with deduplication',
-    desc:'Server-side CAPI alongside browser Pixel, using localStorage to persist purchase data and matching event_id to prevent double-counting.',
-    flow:['Browser Pixel','event_id generated','CAPI (server)','Meta dedup'],
-    proofL:'Problem',
-    proofLtext:'Ads Manager showed higher purchase counts than Events Manager — traced to attribution window, not a tracking bug.',
+    title:'Meta Pixel + Conversions API with Deduplication',
+    desc:'Full browser-and-server Meta tracking — PageView through Purchase — matched by Event ID and confirmed "Deduplicated" in Events Manager.',
+    flow:['Browser Pixel','event_id generated','Server CAPI','Meta dedup'],
+    proofL:'Setup',
+    proofLtext:'Hashed customer data (email, phone, name, address) sent server-side for Advanced Matching, alongside browser Pixel events.',
     proofR:'Verified',
-    proofRtext:'Confirmed matching event_id across browser and server events in Meta Events Manager\'s deduplication report.',
-    pdf:'#', loom:'#'
+    proofRtext:'Every funnel step confirmed "Deduplicated" in Meta Events Manager\'s real-time test events log.',
+    pdf:'meta-capi-tracking.pdf', loom:'#'
+  },
+  {
+    tag:'[TIKTOK] · PIXEL + EVENTS API',
+    title:'TikTok Pixel & Events API Tracking',
+    desc:'Browser Pixel mirrored server-side via Events API, with Automatic Advanced Matching (hashed email/phone) and exact event_id matching for clean deduplication.',
+    flow:['TikTok Pixel','Hashed Advanced Matching','Events API (server)','event_id match'],
+    proofL:'Verified with',
+    proofLtext:'TikTok Pixel Helper (browser-side) and Events Manager (server-side) checked side by side for every funnel event.',
+    proofR:'Result',
+    proofRtext:'Identical event_id confirmed on both browser and server for Purchase — proving accurate, non-duplicated counting.',
+    pdf:'tiktok-tracking.pdf', loom:'#'
+  },
+  {
+    tag:'[SHOPIFY] · META + GA4',
+    title:'Shopify Meta Pixel, CAPI & Server-Side GA4',
+    desc:'Full-funnel tracking for a Shopify store — Meta Pixel, server-side Conversions API, and server-side GA4, all matched by Event ID with item-level data.',
+    flow:['Meta Pixel','Server CAPI','Server-side GA4','Advanced Matching'],
+    proofL:'Coverage',
+    proofLtext:'PageView, ViewContent, AddToCart, InitiateCheckout, Purchase — each with matching browser and server tags.',
+    proofR:'Verified',
+    proofRtext:'Purchase & InitiateCheckout confirmed "Deduplicated" in Meta Events Manager, with item-level data in GA4 DebugView.',
+    pdf:'shopify-tracking.pdf', loom:'#'
   },
   {
     tag:'[CUSTOM JS] · IFRAME FORMS',
-    title:'Iframe form submission tracking without libraries',
-    desc:'Custom JavaScript inside a GTM Custom HTML tag to capture submissions from Paperform, JotForm, and Typeform — no third-party listener scripts.',
-    flow:['postMessage listener','Origin check','dataLayer.push','GTM trigger'],
+    title:'iFrame & Custom Form Tracking via GTM',
+    desc:'Custom JavaScript inside a GTM Custom HTML tag to capture submissions from JotForm, Typeform, Calendly, and HubSpot — no third-party listener scripts.',
+    flow:['postMessage listener','dataLayer.push','GTM trigger','Pixel + GA4 + CAPI'],
     proofL:'Challenge',
-    proofLtext:'Cross-origin iframes block direct DOM access, so submission events had to be caught via postMessage.',
+    proofLtext:'Iframes are separate documents — GTM can\'t see submissions inside them with a normal trigger.',
     proofR:'Result',
-    proofRtext:'Reliable form_submit event firing across three different form platforms from one shared script.',
-    pdf:'#', loom:'#'
+    proofRtext:'Reliable form_submit events across 4+ platforms, deduplicated across browser and server in Meta Events Manager.',
+    pdf:'iframe-tracking.pdf', loom:'#'
   },
   {
-    tag:'[SERVER-SIDE] · sGTM',
-    title:'Server-side tagging with browser/server dedup',
-    desc:'Set up a server-side GTM container to route events through a first-party endpoint, verified for deduplication in both Meta and GA4.',
-    flow:['Client GTM','sGTM endpoint','Meta CAPI','GA4 Measurement Protocol'],
-    proofL:'Setup',
-    proofLtext:'First-party subdomain proxy to reduce ad-blocker loss and improve match quality.',
+    tag:'[CUSTOM EVENTS] · ENGAGEMENT',
+    title:'Engagement & Micro-Conversion Tracking',
+    desc:'Email clicks, phone clicks, copied promo codes, CTA clicks, form submissions, and scroll depth — tracked with the same browser/server rigor as a purchase.',
+    flow:['Custom GTM trigger','Mirror to server','Consolidated tag','Verified dedup'],
+    proofL:'Covers',
+    proofLtext:'mailto: clicks, tel: clicks, copy-to-clipboard, CTA button clicks, contact forms, and 25/50/100% scroll milestones.',
     proofR:'Verified',
-    proofRtext:'Cross-checked event counts in GA4 DebugView and Meta Test Events to confirm no duplication.',
-    pdf:'#', loom:'#'
+    proofRtext:'Every signal confirmed "Deduplicated" in GA4 Test Events — one server-side tag handling all of them via regex matching.',
+    pdf:'custom-event-tracking.pdf', loom:'#'
   },
 ];
 
@@ -446,8 +468,8 @@ cases.forEach((c,i)=>{
         <div class="case-desc">${c.desc}</div>
       </div>
       <div class="case-links" onclick="event.stopPropagation()">
-        <a class="pill" href="${c.pdf}">PDF ↓</a>
-        <a class="pill" href="${c.loom}">Watch ▸</a>
+        <a class="pill" href="${c.pdf}" download>PDF ↓</a>
+        ${c.loom !== '#' ? `<a class="pill" href="${c.loom}" target="_blank" rel="noopener">Watch ▸</a>` : ''}
       </div>
     </div>
     <div class="case-body">
