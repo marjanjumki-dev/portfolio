@@ -468,7 +468,7 @@ cases.forEach((c,i)=>{
         <div class="case-desc">${c.desc}</div>
       </div>
       <div class="case-links" onclick="event.stopPropagation()">
-        <a class="pill" href="${c.pdf}" download>PDF ↓</a>
+        <a class="pill" href="${c.pdf}" target="_blank" rel="noopener">PDF ↓</a>
         ${c.loom !== '#' ? `<a class="pill" href="${c.loom}" target="_blank" rel="noopener">Watch ▸</a>` : ''}
       </div>
     </div>
